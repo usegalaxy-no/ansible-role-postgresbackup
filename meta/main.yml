@@ -1,0 +1,14 @@
+galaxy_info:
+  author: OLaf Sarnow
+  description: configure the local postgres database dump
+  company: Elixir Norway/University of Bergen
+
+  license: MIT
+
+  min_ansible_version: 2.9
+
+  platforms:
+    - name: EL
+      versions:
+        - 7
+dependencies:
