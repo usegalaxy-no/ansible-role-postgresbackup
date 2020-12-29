@@ -1,1 +1,44 @@
 ---
+- name: check for dumpdir
+  stat:
+    path: '{{ dumpdir }}'
+  register: dir
+
+- name: "echo if dump directory already existed"
+  when: dir.stat.exists
+  debug:
+    msg: "{{dumpdir }} directory exists"
+
+- name: create dumpdir if not exist
+  when: not dir.stat.exists
+  file:
+    path: '{{ dumpdir }}'
+    state: directory
+    mode: '0750'
+    owner: '{{ postgresuser }}'
+  tags:
+  - pgdump
+
+
+- name: copy pgdump scripts
+  template:
+    src: 'backup.sh.j2'
+    dest: '/usr/local/bin/dbbackup.sh'
+    mode: 0755
+    owner: root
+    group: root
+    force: yes
+  tags:
+  - pgdump
+
+
+- name: create cron job
+  cron:
+    name: local database dump
+    minute: '{{ cron_minute }}'
+    hour: '{{ cron_hour }}'
+    weekday: '{{ cron_wdays }}'
+    job: '/usr/local/bin/dbbackup.sh > /dev/null 2>&1'
+    user: '{{ postgresuser }}'
+  tags:
+  - pgdump

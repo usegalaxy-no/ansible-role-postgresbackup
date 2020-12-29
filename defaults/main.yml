@@ -1,1 +1,9 @@
 ---
+
+dumpdir: '/var/postgresbackup'
+keepdays: '30'
+notify_email: 'olaf.sarnow@uib.no'
+postgresuser: 'postgres'
+cron_minute: '0'
+cron_hour: '12'
+cron_wdays: '*'
