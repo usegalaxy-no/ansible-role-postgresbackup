@@ -1,1 +1,3 @@
 ---
+- name: reload db
+  shell: su -c "pg_ctl reload" - {{ postgresuser }} 
