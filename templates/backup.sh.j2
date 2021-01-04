@@ -13,7 +13,7 @@ fi
 if bzip2 -c $sqlfile > $zipfile; then
     echo 'The backup was successfully compressed'
 else
-    echo 'Error compressing backup' | mailx -s 'Backup was not created!' 
+    echo 'Error compressing backup' | mailx -s 'Backup was not created!' {{ notify_email }}
     echo 'pg_dump return non-zero code' | mailx -s 'No backup was created!' {{ notify_email }}
     exit
 fi
