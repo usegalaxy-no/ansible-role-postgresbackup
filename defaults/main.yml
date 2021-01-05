@@ -1,11 +1,10 @@
 ---
 
-dumpdir: '/var/postgresbackup'
-keepdays: '3'
+dumpdir: '/srv/postgresbackup'
+keepdays: '5'
 notify_email: 'olaf.sarnow@uib.no'
 postgresuser: 'postgres'
 cron_minute: '0'
-cron_hour: '15'
+cron_hour: '02'
 cron_wdays: '*'
-hba_file: '/var/lib/pgsql/data/pg_hba.conf'
-
+hba_file: '/database/postgres/data/pg_hba.conf'

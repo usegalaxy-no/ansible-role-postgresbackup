@@ -1,7 +1,7 @@
 ---
 
 - hosts:
-    - kattehale
+    - db.usegalaxy.no
   vars:
   become: true
   roles:

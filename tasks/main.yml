@@ -46,7 +46,7 @@
 - name: add entry to hba file
   lineinfile:
     dest: '{{ hba_file }}'
-    line: 'local all all peer'
+    line: 'local all {{ postgresuser }} peer'
   notify: reload db
   tags:
   - pgdump
