@@ -20,5 +20,26 @@ fi
 
 rm $sqlfile 
 
+dbsqlfile={{ dumpdir }}/{{ dbname }}-$(date +%d-%m-%Y_%H-%M-%S).sql
+dbzipfile={{ dumpdir }}/{{ dbname }}-$(date +%d-%m-%Y_%H-%M-%S).bz2
+
+if pg_dump {{ dbname }}  > $dbsqlfile ; then
+    echo 'Sql dump created'
+else
+    echo 'pg_dump return non-zero code' | mailx -s 'No backup was created!' {{ notify_email }}
+    exit
+fi
+
+
+if bzip2 -c $dbsqlfile > $dbzipfile; then
+    echo 'The backup was successfully compressed'
+else
+    echo 'Error compressing backup' | mailx -s 'Backup was not created!' 
+    echo 'pg_dump return non-zero code' | mailx -s 'No backup was created!' {{ notify_email }}
+    exit
+fi
+
+rm $dbsqlfile 
+
 # Delete old backups 
 find {{ dumpdir }} -mtime +{{ keepdays }} -delete

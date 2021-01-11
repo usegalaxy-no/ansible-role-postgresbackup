@@ -1,6 +1,7 @@
 ---
 
 dumpdir: '/srv/postgresbackup'
+dbname: 'usegalaxy'
 keepdays: '5'
 notify_email: 'olaf.sarnow@uib.no'
 postgresuser: 'postgres'
